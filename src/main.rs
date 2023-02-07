@@ -75,8 +75,9 @@ pub fn prove_sha256(msg: &[u8]) -> Result<()> {
         original_proof.to_bytes().len(),
     );
 
-    let config = CircuitConfig::standard_recursion_config();
-
+    let mut config = CircuitConfig::standard_recursion_config();
+    config.fri_config.rate_bits = 6;
+    config.fri_config.num_query_rounds = 14;
     recursive_proof::<F, C, C, D>(original_proof, data.verifier_only, data.common, &config)?;
 
     Ok(())
