@@ -1,4 +1,4 @@
-TIME = /usr/bin/time
+TIME=/usr/bin/time
 which $TIME
 
 RUSTFLAGS=-Ctarget-cpu=native $TIME -f "Peak memory: %M mb" cargo +nightly run --release --package plonky2_sha256 --bin plonky2_sha256 -- 64
