@@ -1,4 +1,5 @@
 #![feature(generic_const_exprs)]
+use std::env;
 use anyhow::{Result, Ok};
 use log::{Level, LevelFilter};
 use plonky2::hash::hash_types::RichField;
@@ -151,10 +152,18 @@ fn main() -> Result<()> {
     builder.filter_level(LevelFilter::Debug);
     builder.try_init()?;
 
-    const MSG_SIZE: usize = 64 * 4;
-    let mut msg = vec![0; MSG_SIZE as usize];
-    for i in 0..MSG_SIZE - 1 {
+    let args: Vec<String> = env::args().collect();
+    let message_size = args[1].parse::<usize>().unwrap();
+    if message_size < 1024 {
+        println!("messag size: {} B", message_size);
+    } else {
+        println!("messag size: {} KB", message_size / 1024);
+    }
+
+    let mut msg = vec![0; message_size];
+    for i in 0..message_size - 1 {
         msg[i] = 0 as u8;
     }
+
     prove_sha256(&msg)
 }
