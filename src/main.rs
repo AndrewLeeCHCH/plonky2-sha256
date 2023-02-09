@@ -155,9 +155,9 @@ fn main() -> Result<()> {
     let args: Vec<String> = env::args().collect();
     let message_size = args[1].parse::<usize>().unwrap();
     if message_size < 1024 {
-        println!("messag size: {} B", message_size);
+        println!("message size: {} B", message_size);
     } else {
-        println!("messag size: {} KB", message_size / 1024);
+        println!("message size: {} KB", message_size / 1024);
     }
 
     let mut msg = vec![0; message_size];
